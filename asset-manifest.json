@@ -1,0 +1,10 @@
+{
+  "files": {
+    "main.js": "/hotdog-counter/static/js/main.0c48c20f.js",
+    "index.html": "/hotdog-counter/index.html",
+    "main.0c48c20f.js.map": "/hotdog-counter/static/js/main.0c48c20f.js.map"
+  },
+  "entrypoints": [
+    "static/js/main.0c48c20f.js"
+  ]
+}
