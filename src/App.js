@@ -16,23 +16,16 @@ const App = () => {
     };
   
     const setDogCookie = () => {
-        console.log('all dogs', allDogs)
         var json = JSON.stringify(allDogs);
-        console.log('all json', json)
-        //var encoded = encodeURIComponent(json);
         localStorage.removeItem("hotDogCounter");
         localStorage.setItem("hotDogCounter", json);
     };
 
     const getDogCookie = () => {
         var local = localStorage.getItem("hotDogCounter");
-        console.log('local', local)
         if (local.length) {
             var localDogs = JSON.parse(local);
-            console.log('obj', localDogs)
             setAllDogs(localDogs)
-            //var allCookies = cookies.split(';');
-            // console.log('all', allCookies)
         }
     }
 
@@ -49,7 +42,6 @@ const App = () => {
             location: newLocation,
             notes: newNotes
         }
-        //console.log('newdog', newDog)
         setAllDogs([...allDogs, newDog]);
         setNewBool(false);
     }
@@ -59,8 +51,7 @@ const App = () => {
     }
 
     useEffect = (() => {
-        let answer = getDogCookie();
-        console.log('ping', answer)
+        getDogCookie();
     }, []);
 
     // useEffect = (() => {
