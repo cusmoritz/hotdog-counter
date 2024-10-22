@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from 'react-dom/client';
 import { useState } from "react";
+import { useEffect } from "react";
 
 const App = () => {
 
@@ -13,23 +14,29 @@ const App = () => {
     const addNewDog = () => {
         setNewBool(true)
     };
-    var header = '\x20\x20\x20\x20\x20\x5F\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x5F\x20\x20\x20\x20\x20\x20\x5F\x20\x20\n\x20\x20\x20\x20\x7C\x20\x7C\x20\x20\x20\x20\x20\x20\x20\x20\x20\x7C\x20\x7C\x20\x20\x20\x20\x7C\x20\x7C\n\x20\x20\x20\x20\x7C\x20\x7C\x5F\x5F\x20\x20\x20\x5F\x5F\x5F\x20\x7C\x20\x7C\x5F\x20\x5F\x5F\x7C\x20\x7C\x20\x5F\x5F\x5F\x20\x20\x20\x5F\x5F\x20\x5F\x20\n\x20\x20\x20\x20\x7C\x20\'\x5F\x20\x20\x2F\x20\x5F\x20\x7C\x20\x5F\x5F\x2F\x20\x5F\x60\x20\x7C\x2F\x20\x5F\x20\x20\x2F\x20\x5F\x60\x20\x7C\n\x20\x20\x20\x20\x7C\x20\x7C\x20\x7C\x20\x7C\x20\x28\x5F\x29\x20\x7C\x20\x7C\x7C\x20\x28\x5F\x7C\x20\x7C\x20\x28\x5F\x29\x20\x7C\x20\x28\x5F\x7C\x20\x7C\n\x20\x20\x20\x20\x7C\x5F\x7C\x20\x7C\x5F\x7C\x5F\x5F\x5F\x2F\x20\x5F\x5F\x5F\x5F\x2C\x5F\x7C\x5F\x5F\x5F\x2F\x20\x5F\x5F\x2C\x20\x7C\n\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x5F\x5F\x2F\x20\x7C\n\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x7C\x5F\x5F\x5F\x2F'
+  
+    const setDogCookie = () => {
+        console.log('all dogs', allDogs)
+        var json = JSON.stringify(allDogs);
+        console.log('all json', json)
+        //var encoded = encodeURIComponent(json);
+        localStorage.removeItem("hotDogCounter");
+        localStorage.setItem("hotDogCounter", json);
+    };
 
-    const Component = () => {
-    //     `
-    //  _           _      _  
-    // | |         | |    | |
-    // | |__   ___ | |_ __| | ___   __ _ 
-    // | '_ \ / _ \| __/ _` |/ _ \ / _` |
-    // | | | | (_) | || (_| | (_) | (_| |
-    // |_| |_|\___/ \__\__,_|\___/ \__, |
-    //                             __/ |
-    //                            |___/`
+    const getDogCookie = () => {
+        var local = localStorage.getItem("hotDogCounter");
+        console.log('local', local)
+        if (local.length) {
+            var localDogs = JSON.parse(local);
+            console.log('obj', localDogs)
+            setAllDogs(localDogs)
+            //var allCookies = cookies.split(';');
+            // console.log('all', allCookies)
+        }
     }
 
     const submitDog = () => {
-        
-
         var testDate = "";
         if (!newDate) {
             let _date = new Date();
@@ -42,14 +49,23 @@ const App = () => {
             location: newLocation,
             notes: newNotes
         }
-        console.log('newdog', newDog)
+        //console.log('newdog', newDog)
         setAllDogs([...allDogs, newDog]);
-        setNewBool(false)
+        setNewBool(false);
     }
 
     const removeForm = () => {
         setNewBool(false);
     }
+
+    useEffect = (() => {
+        let answer = getDogCookie();
+        console.log('ping', answer)
+    }, []);
+
+    // useEffect = (() => {
+    //     setDogCookie();
+    // }, [allDogs])
 
     return (
         <div className="hotdog-container">
@@ -79,8 +95,9 @@ const App = () => {
             </div> 
             : 
             <div className="table-coantainer">
-            <button onClick={addNewDog}>Add Dog</button>
-
+            <button onClick={addNewDog}>Add Dog</button>&nbsp;
+                <button onClick={getDogCookie}>Load Dogs</button>&nbsp;
+                <button onClick={setDogCookie}>Save Dogs</button>
             <table>
                 <tbody>
                     <tr>
